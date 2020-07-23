@@ -13,8 +13,8 @@ var cors = require('cors');
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 
-var client_id =process.env.CLIENT_ID; // Your client id
-var client_secret =process.env.CLIENT_SECRET; // Your secret
+var client_id; // Your client id
+var client_secret; // Your secret
 var redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
 
 //Authorization scopes
@@ -71,7 +71,9 @@ app.use(express.static(__dirname + '/public'))
 
 app.get('/login', function(req, res) {
 
-  var state = generateRandomString(16);
+	client_id = req.query.client_id;
+	client_secret = req.query.client_secret;	
+	var state = generateRandomString(16);
   res.cookie(stateKey, state);
 
   // your application requests authorization

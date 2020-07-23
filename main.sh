@@ -8,12 +8,13 @@ do
 			case "${OPTARG}"
 			in
 				init)
-				echo check	
+				echo init	
 				;;
 			esac
 			;;
 		p)
 			echo play
 			;;
+
 	esac
 done
