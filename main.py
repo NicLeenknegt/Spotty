@@ -6,18 +6,6 @@ from data.api_caller import set_url,add_query_parameters
 from views.MainView import MainView
 from enum import Enum
 
-class ResultStatus(Enum):
-    OK = 1
-    ERROR = 2
-    UNDEFINED = 3
-
-class ThreadResult:
-
-    def __init__(self):
-        self.status = ResultStatus.UNDEFINED
-        self.result:dict = {}
-
-
 def main(argv):
     try:
         opts,args = getopt.getopt(argv,"i",["init"])
@@ -31,8 +19,9 @@ def main(argv):
             view = MainView()
             view.start_loading_animation()
             with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
-                executor.submit(run_view, view, pipeline)
                 executor.submit(run_thread, pipeline)
+            message = pipeline.get()
+            view.stop_loading_animation()
             sys.exit()
 
 def run_view(view:MainView, queue:queue):
