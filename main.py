@@ -18,7 +18,7 @@ def main(argv):
         if opt in ("-i",  "--init"):
             view_model = ViewModel()
             device_view = DeviceView(view_model) 
-            device_view.show_device_table()
+            device_view.observer()
             sys.exit()
 
 @set_url("localhostt")
