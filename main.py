@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-import sys,  getopt, urllib.parse, webbrowser, time, concurrent.futures, queue
+import sys,  getopt, urllib.parse, webbrowser, time, concurrent.futures, queue, threading
 from typing import Union, Callable
 from data.api_caller import set_url,add_query_parameters
 from views.MainView import MainView
@@ -15,23 +15,23 @@ def main(argv):
     for opt, arg in opts:
         if opt in ("-i",  "--init"):
             #print(get_client_config())
-            pipeline = queue.Queue(maxsize=1)
             view = MainView()
             view.start_loading_animation()
-            with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
-                executor.submit(run_thread, pipeline)
-            message = pipeline.get()
+            t = run_thread()
+            t.join()
             view.stop_loading_animation()
             sys.exit()
 
-def run_view(view:MainView, queue:queue):
-    message = queue.get()
-    print(message)
-    view.stop_loading_animation()
+def run_on_thread(f):
+    def run(*k, **kw):
+        t = threading.Thread(target=f, args=k, kwargs=kw)
+        t.start()
+        return t
+    return run 
 
-def run_thread(queue:queue):
-    time.sleep(5)
-    queue.put("nice") 
+@run_on_thread
+def run_thread():
+    time.sleep(2)
 
 @set_url("localhostt")
 @add_query_parameters()
