@@ -5,6 +5,8 @@ from typing import Union, Callable
 from data.api_caller import set_url,add_query_parameters
 from views.MainView import MainView
 from enum import Enum
+from views.DeviceView import DeviceView
+from view_models.ViewModel import ViewModel
 
 def main(argv):
     try:
@@ -14,24 +16,10 @@ def main(argv):
         sys.exit(2)
     for opt, arg in opts:
         if opt in ("-i",  "--init"):
-            #print(get_client_config())
-            view = MainView()
-            view.start_loading_animation()
-            t = run_thread()
-            t.join()
-            view.stop_loading_animation()
+            view_model = ViewModel()
+            device_view = DeviceView(view_model) 
+            device_view.show_device_table()
             sys.exit()
-
-def run_on_thread(f):
-    def run(*k, **kw):
-        t = threading.Thread(target=f, args=k, kwargs=kw)
-        t.start()
-        return t
-    return run 
-
-@run_on_thread
-def run_thread():
-    time.sleep(2)
 
 @set_url("localhostt")
 @add_query_parameters()
