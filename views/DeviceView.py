@@ -15,7 +15,5 @@ class DeviceView:
         self.view_model.set_observable("check")
 
     def show_device_table(self):
-        pipeline = queue.Queue(maxsize=1)
-        t = self.view_model.get_devices(pipeline)
-        t.join()
-        print(pipeline.get())
+        #pipeline = queue.Queue(maxsize=1)
+        self.view_model.get_devices_v2()
