@@ -6,7 +6,7 @@ from data.api_caller import set_url,add_query_parameters
 from views.MainView import MainView
 from enum import Enum
 from views.DeviceView import DeviceView
-from view_models.ViewModel import ViewModel
+from view_models.DeviceViewModel import DeviceViewModel
 
 def main(argv):
     try:
@@ -16,7 +16,7 @@ def main(argv):
         sys.exit(2)
     for opt, arg in opts:
         if opt in ("-i",  "--init"):
-            view_model = ViewModel()
+            view_model = DeviceViewModel()
             device_view = DeviceView(view_model) 
             device_view.show_device_table()
             sys.exit()
