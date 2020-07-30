@@ -18,7 +18,7 @@ class DeviceViewModel(ViewModel):
     def get_devices_on_error(self,result:any) -> None:
         print("ERROR")
 
-    @run_async( ViewModel.reference , get_devices_on_success, get_devices_on_error)
+    @run_in_thread(get_devices_on_success, get_devices_on_error)
     def get_devices(self) -> dict:
         time.sleep(2)
         return {'result', "wow"}
