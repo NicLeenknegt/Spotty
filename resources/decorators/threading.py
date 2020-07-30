@@ -25,6 +25,7 @@ def run_in_thread(reference:object, on_success_listener:Callable[[any],None], on
             tw.on_success_listener = on_success_listener
             tw.on_error_listener = on_error_listener
             tw.threading_target = thread_target 
+            tw.reference = reference
 
             tw.start_thread(k)
             tw.finish_thread()

@@ -5,13 +5,14 @@ from typing import Callable
 from resources.threading.ThreadingResult import ThreadingResult
 
 class ThreadingWrapper:
-
+    
     def __init__(self):
         self.threading_target:Callable[[any],any] 
         self.on_success_listener:Callable[[any], None]
         self.on_error_listener:Callable[[any], None]
         self.pipeline = queue.Queue(maxsize=1)
         self.thread = None
+        self.reference = None
 
     def run_on_thread(self, *args):
         result:ThreadingResult = ThreadingResult()
@@ -33,6 +34,6 @@ class ThreadingWrapper:
         result:ThreadingResult = self.pipeline.get()
         self.thread.join()
         if result.is_ok(): 
-            self.on_success_listener(result)
+            self.on_success_listener(self.reference, result)
         else:
-            self.on_error_listener(result)
+            self.on_error_listener(self.reference, result)
