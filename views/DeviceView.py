@@ -5,7 +5,7 @@ from view_models.ViewModel import ViewModel
 class DeviceView:
 
     def on_change_listener(self,value):
-        print("OBSERVER: " + value)
+        print("OBSERVER: " + str(value))
 
     def __init__(self, view_model:ViewModel):
         self.view_model = view_model
