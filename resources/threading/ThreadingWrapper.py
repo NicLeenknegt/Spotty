@@ -22,7 +22,7 @@ class ThreadingWrapper:
             result.set_result(return_value)
         except Exception as e:
             result.set_error()
-            result.set_result(getattr(e, 'message'))
+            result.set_result(e)
         finally:
             self.pipeline.put(result)
 

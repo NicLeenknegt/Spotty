@@ -10,10 +10,8 @@ class MainView:
         for c in itertools.cycle(self.animation_frames):
             if self.done:
                 break
-            sys.stdout.write('\rloading ' + c)
-            sys.stdout.flush()
+            print('loading ' + c + ' ' + str(self.done), end='\r', flush=True)
             time.sleep(0.1)
-        sys.stdout.write('\rDone!')
 
     def start_loading_animation(self):
         t = threading.Thread(target=self.run_animation)
