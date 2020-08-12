@@ -3,6 +3,7 @@
 import sys,  getopt
 from views.DeviceView import DeviceView
 from view_models.DeviceViewModel import DeviceViewModel
+from resources.options.Option import Option
 
 def main(argv):
     try:
@@ -12,9 +13,9 @@ def main(argv):
         sys.exit(2)
     for opt, arg in opts:
         if opt in ("-i",  "--init"):
-            view_model = DeviceViewModel()
-            device_view = DeviceView(view_model) 
-            device_view.show_device_table()
+            option = Option('select', True)
+            print(option.get_long_option())
+            print(option.get_short_option())
             sys.exit()
 
 if  __name__ ==  "__main__":
